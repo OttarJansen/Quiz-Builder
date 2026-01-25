@@ -1,0 +1,236 @@
+{
+  "info": {
+    "_postman_id": "c4242d0b-ba43-4b54-93c3-f8763a253f3c",
+    "name": "Quiz API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51803838",
+    "_collection_link": "https://go.postman.co/collection/51803838-c4242d0b-ba43-4b54-93c3-f8763a253f3c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET /quizzes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/quizzes",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /quizzes/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/quizzes/123",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes",
+            "123"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /quizzes",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Math Test\",\r\n  \"questions\": [\r\n    {\r\n      \"text\": \"What is 2 + 2?\",\r\n      \"options\": [\"3\", \"4\", \"5\"],\r\n      \"correctOption\": \"4\"\r\n    },\r\n    {\r\n      \"text\": \"Is 1 bigger than 2?\",\r\n      \"options\": [\"Yes\", \"No\"],\r\n      \"correctOption\": \"No\"\r\n    }\r\n  ]\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/quizzes",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /quizzes (missing title)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"questions\": [\r\n    {\r\n      \"text\": \"Is the title missing?\",\r\n      \"options\": [\"Yes\", \"No\"],\r\n      \"correctOption\": \"Yes\"\r\n    }\r\n  ]\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/quizzes",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /quizzes (missing questions)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Missing Questions\",\r\n  \"questions\": []\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/quizzes",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /quizzes (wrong structure)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Test quiz\",\r\n  \"questions\": [\r\n    {\r\n      \"text\": \"Question without options\"\r\n    }\r\n  ]\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/quizzes",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT /quizzes/:id",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Updated Quiz\",\r\n  \"questions\": [\r\n    {\r\n      \"text\": \"Is this a test?\",\r\n      \"options\": [\"Yes\", \"No\"],\r\n      \"correctOption\": \"Yes\"\r\n    }\r\n  ]\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/quizzes/1",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /quizzes/:id",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseURL}}/quizzes/1",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "quizzes",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
