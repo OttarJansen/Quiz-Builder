@@ -1,4 +1,3 @@
-import { quizSchema } from '../schema/quizSchema.mjs';
 
 export function validateQuiz(req, res, next) {
   const { title, questions } = req.body;
