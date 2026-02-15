@@ -1,7 +1,10 @@
 import express from "express";
+import dotenv from "dotenv";
 import quizRouter from "./routes/quizAPI.mjs";
 import userRouter from "./routes/userAPI.mjs";
 import securityAudit from "./middleware/security.mjs";
+
+dotenv.config();
 
 const app = express();
 const port = 3000;

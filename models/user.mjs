@@ -22,5 +22,8 @@ export function createUser(consentGiven) {
 }
 
 export function deleteUser(userId) {
+  if (!Users[userId]) {
+    throw new Error("User not found");
+  }
   delete Users[userId];
 }
