@@ -1,7 +1,7 @@
 # Data Privacy Policy
 
 Collected Data
-Only the information necessary to provide the service is collected. This includes a unique ID and a passwordhash when creating a user account.
+Only the information necessary to provide the service is collected. This includes a unique ID, username and a passwordhash when creating a user account.
 
 Why the Data is Collected
 The information is used to identify users within the system, manage accounts, and provide access to the service.

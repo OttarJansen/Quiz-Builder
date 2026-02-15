@@ -8,10 +8,14 @@ userRouter.use(express.json());
 
 userRouter.post("/", (req, res) => {
   try {
-    const { consent } = req.body;
+    const { username, consent } = req.body;
+    const securityToken = req.token;
 
-    const newUser = createUser(consent);
+    if (!consent) throw new Error("User must consent to ToS");
+
+    const newUser = createUser({ username, consent, securityToken });
     res.status(201).json(newUser);
+    
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
