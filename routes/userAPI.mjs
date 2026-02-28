@@ -16,6 +16,10 @@ userRouter.post("/", async (req, res) => {
     res.status(201).json(newUser);
 
   } catch (err) {
+    if (err.code === "23505") {
+      return res.status(409).json({ error: "Username already exists" });
+    }
+
     res.status(400).json({ error: err.message });
   }
 });
