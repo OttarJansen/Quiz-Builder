@@ -6,26 +6,23 @@ const userRouter = express.Router();
 userRouter.use(express.json());
 
 
-userRouter.post("/", (req, res) => {
+userRouter.post("/", async (req, res) => {
   try {
-    const { username, consent } = req.body;
-    const securityToken = req.token;
+    const { username, consent, hashedPassword } = req.body;
 
     if (!consent) throw new Error("User must consent to ToS");
 
-    const newUser = createUser({ username, consent, securityToken });
+    const newUser = await createUser({ username, consent, hashedPassword });
     res.status(201).json(newUser);
-    
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-userRouter.delete("/:id", (req, res) => {
-  const { id } = req.params;
-
+userRouter.delete("/:id", async (req, res) => {
   try {
-    deleteUser(id);
+    await deleteUser(req.params.id);
     res.status(204).end();
   } catch {
     res.status(404).json({ error: "User not found" });

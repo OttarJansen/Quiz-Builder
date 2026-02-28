@@ -27,7 +27,7 @@ A user with a unique id and hashed password is then created as shown here:
     "userId": "c619faf9-6c81-4239-9213-50b620ec322d",
     "username": "testuser",
     "consentGiven": true,
-    "securePassword": "310b612cf297fc356e657dbf2a085eb2f56ac29cec378f1e6b852eda1a4f1904"
+    "hashedPassword": "310b612cf297fc356e657dbf2a085eb2f56ac29cec378f1e6b852eda1a4f1904"
 }
 
 -------------------------------------------------
