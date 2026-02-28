@@ -1,35 +1,24 @@
 import { createHmac } from "node:crypto";
 
 function securityAudit(req, res, next) {
+  if (req.method === "POST" && req.body.password) {
+    const originalPassword = req.body.password;
+    req.body.password = "";
 
-    if (req.method === "POST") {
-        if (req.body.password) {
-            let originalPassword = req.body.password;
-            req.body.password = "";
-            let securityToken = createSecurePassToken(originalPassword, process.env.SECRET);
-            req.token = securityToken;
-        }
-    } 
+    req.body.hashedPassword = hashPassword(originalPassword, process.env.SECRET);
+  }
 
-    next();
-}
-
-function createSecurePassToken(originalPassword, secret) {
-    return {
-        securePassword: hashPassword(originalPassword, secret),
-        token: {}
-    }
+  next();
 }
 
 function hashPassword(originalPassword, secret) {
-    
-    if (!secret) {
-        throw new Error("Missing SECRET environment variable");
-    }
+  if (!secret) {
+    throw new Error("Missing SECRET environment variable");
+  }
 
-    const hmac = createHmac("sha256", secret);
-    hmac.update(originalPassword);
-    return hmac.digest("hex");
+  const hmac = createHmac("sha256", secret);
+  hmac.update(originalPassword);
+  return hmac.digest("hex");
 }
 
 export default securityAudit;

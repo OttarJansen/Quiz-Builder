@@ -1,27 +1,33 @@
 import crypto from "crypto";
+import pool from "../database/database.mjs";
 
-const Users = {};
-
-export function createUser({ username, consent, securityToken }) {
+export async function createUser({ username, consent, hashedPassword }) {
   if (!consent) {
     throw new Error("User must consent to ToS");
   }
 
   const userId = crypto.randomUUID();
-  const user = {
+
+  const query = `
+    INSERT INTO users (id, username, consent, hashedpassword)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;
+  `;
+
+  const result = await pool.query(query, [
     userId,
     username,
-    consentGiven: true,
-    securePassword: securityToken.securePassword
-  };
+    consent,
+    hashedPassword
+  ]);
 
-  Users[userId] = user;
-  return user;
+  return result.rows[0];
 }
 
-export function deleteUser(userId) {
-  if (!Users[userId]) {
+export async function deleteUser(userId) {
+  const result = await pool.query("DELETE FROM users WHERE id = $1 RETURNING *", [userId]);
+
+  if (result.rowCount === 0) {
     throw new Error("User not found");
   }
-  delete Users[userId];
 }
