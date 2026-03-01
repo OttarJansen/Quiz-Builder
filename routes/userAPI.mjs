@@ -27,7 +27,7 @@ userRouter.post("/", async (req, res) => {
 userRouter.delete("/:id", async (req, res) => {
   try {
     await deleteUser(req.params.id);
-    res.status(204).end();
+    res.status(200).json({ message: "User deleted" });
   } catch {
     res.status(404).json({ error: "User not found" });
   }

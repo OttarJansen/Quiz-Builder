@@ -11,7 +11,13 @@ export function validateQuiz(req, res, next) {
   }
 
   for (let q of questions) {
-    if (!q.text || !Array.isArray(q.options) || q.options.length < 2 || !q.correctOption) {
+    if (
+      !q.text ||
+      !Array.isArray(q.options) ||
+      q.options.length < 2 ||
+      !Array.isArray(q.correctOptions) || 
+      q.correctOptions.length === 0
+    ) {
       return res.status(400).json({ error: "Invalid question structure" });
     }
   }

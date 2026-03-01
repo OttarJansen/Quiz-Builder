@@ -1,4 +1,4 @@
-import loadView from "./viewLoader.mjs";
+import loadView from "../viewLoader.mjs";
 import { initRegisterController } from "./controllers/registerController.mjs";
 
 const app = document.getElementById("app");
