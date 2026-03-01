@@ -1,5 +1,5 @@
 import { get } from "./fetchManager.mjs"
-import HTTP from "../http.mjs";
+import HTTP from "./http.mjs";
 
 async function loadView(name) {
     let viewTemplateRaw = await get(`./views/${name}.html`, HTTP.contentTypes.text.html);

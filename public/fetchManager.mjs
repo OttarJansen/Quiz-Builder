@@ -1,4 +1,4 @@
-import HTTP from "../http.mjs";
+import HTTP from "./http.mjs";
 
 async function get(url, contentType = HTTP.contentTypes.application.json) {
     return await runRequest(HTTP.methods.GET, url, null, contentType);
