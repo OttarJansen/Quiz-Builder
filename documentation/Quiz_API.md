@@ -36,20 +36,20 @@ body example:
   "title": "Math Test",
   "questions": [
     {
-      "text": "What is 2 + 2?",
+      "text": "Which numbers are odd?",
       "options": ["3", "4", "5"],
-      "correctOption": "4"
+      "correctOptions": ["3", "5"]
     },
     {
       "text": "Is 1 bigger than 2?",
       "options": ["Yes", "No"],
-      "correctOption": "No"
+      "correctOptions": ["No" ]
     }
   ]
 }
 
 -------------------------------------------------
-PUT /quizzes/:id:
+PUT /quizzes/:id: "coming soon"
 
 {{baseURL}}/quizzes/1
 
