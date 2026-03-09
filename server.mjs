@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import quizRouter from "./routes/quizAPI.mjs";
 import userRouter from "./routes/userAPI.mjs";
 import securityAudit from "./middleware/security.mjs";
+import languageMiddleware from "./middleware/language.mjs";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use(express.static("public"));
+app.use(languageMiddleware);
 app.use("/quizzes", quizRouter);
 app.use("/user", securityAudit, userRouter);
 

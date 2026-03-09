@@ -10,7 +10,7 @@ quizRouter.use(express.json());
 quizRouter.post("/", validateQuiz, async (req, res) => {
   try {
     const quizId = await createQuiz(req.body);
-    res.status(201).json({ message: "Quiz created", id: quizId });
+    res.status(201).json({ message: req.l10n.feedback.createdQuizSuccessfully, id: quizId });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -24,22 +24,22 @@ quizRouter.get("/:id", async (req, res) => {
   const quiz = await getQuizById(req.params.id);
 
   if (!quiz) {
-    return res.status(404).json({ error: "Quiz not found" });
+    return res.status(404).json({ error: req.l10n.errorCodes.quizNotFound });
   }
 
   res.json(quiz);
 });
 
 quizRouter.put("/:id", validateQuiz, (req, res) => {
-  res.json({ message: "Quiz updated" });
+  res.json({ message: req.l10n.feedback.updatedQuizSuccessfully });
 });
 
 quizRouter.delete("/:id", async (req, res) => {
   try {
     await deleteQuiz(req.params.id);
-    res.status(200).json({ message: "Quiz deleted" });
+    res.status(200).json({ message: req.l10n.errorCodes.deletedQuizSuccessfully });
   } catch {
-    res.status(404).json({ error: "Quiz not found" });
+    res.status(404).json({ error: req.l10n.errorCodes.quizNotFound });
   }
 });
 

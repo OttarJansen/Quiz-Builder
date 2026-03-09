@@ -17,7 +17,7 @@ export function initRegisterController() {
     if (response.error) {
       alert(response.error);
     } else {
-      alert("User created");
+      alert(response.message);
       form.reset();
     }
     

@@ -10,14 +10,14 @@ userRouter.post("/", async (req, res) => {
   try {
     const { username, consent, hashedPassword } = req.body;
 
-    if (!consent) throw new Error("User must consent to ToS");
+    if (!consent) throw new Error(req.l10n.errorCodes.missingConsent);
 
     const newUser = await createUser({ username, consent, hashedPassword });
-    res.status(201).json(newUser);
+    res.status(201).json({ message: req.l10n.feedback.successfulUserCreation, user: newUser });
 
   } catch (err) {
     if (err.code === "23505") {
-      return res.status(409).json({ error: "Username already exists" });
+      return res.status(409).json({ error: req.l10n.errorCodes.duplicateUserName });
     }
 
     res.status(400).json({ error: err.message });
@@ -27,9 +27,9 @@ userRouter.post("/", async (req, res) => {
 userRouter.delete("/:id", async (req, res) => {
   try {
     await deleteUser(req.params.id);
-    res.status(200).json({ message: "User deleted" });
+    res.status(200).json({ message: req.l10n.feedback.successfulUserDeletion });
   } catch {
-    res.status(404).json({ error: "User not found" });
+    res.status(404).json({ error: req.l10n.errorCodes.userNotFound });
   }
 });
 
