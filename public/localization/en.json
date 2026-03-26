@@ -7,14 +7,18 @@
         "titleError": "Missing or invalid title",
         "questionsNotFound": "No questions provided",
         "invalidQuestionStructure": "Invalid question structure",
-        "networkError": "No internet connection"
+        "networkError": "No internet connection",
+        "missingCredentials": "Missing username or password",
+        "invalidCredentials": "Wrong username or password",
+        "serverError": "Server error"
     },
     "feedback": {
         "successfulUserDeletion": "User deleted successfully",
         "successfulUserCreation": "User created successfully",
         "createdQuizSuccessfully": "Quiz created successfully",
         "deletedQuizSuccessfully": "Quiz deleted successfully",
-        "updatedQuizSuccessfully": "Quiz updated successfully"
+        "updatedQuizSuccessfully": "Quiz updated successfully",
+        "successfulLogin": "Login successful"
     },
     "formating": {
         "time": "hh:mm:ss"

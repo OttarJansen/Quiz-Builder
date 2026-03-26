@@ -31,3 +31,19 @@ export async function deleteUser(userId) {
     throw new Error("User not found");
   }
 }
+
+export async function getUserByUsername(username) {
+  const query = "SELECT * FROM users WHERE username = $1";
+  const result = await pool.query(query, [username]);
+  return result.rows[0];
+}
+
+export function verifyPassword(plaintext, hashed) {
+  if (!process.env.SECRET) {
+    throw new Error("Missing SECRET environment variable");
+  }
+
+  const hmac = crypto.createHmac("sha256", process.env.SECRET);
+  hmac.update(plaintext);
+  return hmac.digest("hex") === hashed;
+}

@@ -1,5 +1,6 @@
 import loadView from "./viewLoader.mjs";
 import { initRegisterController } from "./controllers/registerController.mjs";
+import { initLoginController } from "./controllers/loginController.mjs";
 
 const app = document.getElementById("app");
 
@@ -14,7 +15,7 @@ async function renderView(viewName, initController) {
     }
 }
 
-renderView("registerView", initRegisterController);
+renderView("loginView", initLoginController);
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {

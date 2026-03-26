@@ -1,5 +1,7 @@
 import { post } from "../fetchManager.mjs";
 import i18n from "../i18nClient.mjs";
+import loadView from "../viewLoader.mjs";
+import { initLoginController } from "./loginController.mjs";
 
 export function initRegisterController() {
   const form = document.getElementById("register-form");
@@ -25,5 +27,13 @@ export function initRegisterController() {
     } catch (err) {
       alert(i18n.errorCodes.networkError);
     }
+  });
+
+  const loginPageBtn = document.getElementById("loginPageBtn");
+  loginPageBtn.addEventListener("click", async () => {
+    const template = await loadView("loginView");
+    app.replaceChildren();
+    app.appendChild(template.content.cloneNode(true));
+    initLoginController();
   });
 }

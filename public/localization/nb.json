@@ -7,13 +7,17 @@
         "titleError": "Manglende eller ugyldig tittel",
         "questionsNotFound": "Manglende spørsmål",
         "invalidQuestionStructure": "Ugyldig spørsmål-struktur",
-        "networkError": "Ingen nettverkstilkobling"
+        "networkError": "Ingen nettverkstilkobling",
+        "missingCredentials": "Manglende brukernavn eller passord",
+        "invalidCredentials": "Feil brukernavn eller passord",
+        "serverError": "Server feilet"
     },
     "feedback": {
         "successfulUserDeletion": "Brukeren ble slettet",
         "successfulUserCreation": "Brukeren ble opprettet",
         "createdQuizSuccessfully": "Quizen ble opprettet",
         "deletedQuizSuccessfully": "Quizen ble slettet",
-        "updatedQuizSuccessfully": "Quizen ble oppdatert"            
+        "updatedQuizSuccessfully": "Quizen ble oppdatert",
+        "successfulLogin": "Vellykket innlogging"     
     }
 }
