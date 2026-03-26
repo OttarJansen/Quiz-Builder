@@ -9,7 +9,7 @@ const i18n = {
 }
 
 
-const path = `localization`
+const path = `public/localization`
 let files = fs.readdirSync(`./${path}`);
 for (let file of files) {
     let id = file.replace(".json", "");

@@ -1,0 +1,22 @@
+{
+    "errorCodes": {
+        "missingConsent": "User must consent to ToS",
+        "duplicateUsername": "Username already exists",
+        "userNotFound": "User not found",
+        "quizNotFound": "Quiz not found",
+        "titleError": "Missing or invalid title",
+        "questionsNotFound": "No questions provided",
+        "invalidQuestionStructure": "Invalid question structure",
+        "networkError": "No internet connection"
+    },
+    "feedback": {
+        "successfulUserDeletion": "User deleted successfully",
+        "successfulUserCreation": "User created successfully",
+        "createdQuizSuccessfully": "Quiz created successfully",
+        "deletedQuizSuccessfully": "Quiz deleted successfully",
+        "updatedQuizSuccessfully": "Quiz updated successfully"
+    },
+    "formating": {
+        "time": "hh:mm:ss"
+    }
+}
