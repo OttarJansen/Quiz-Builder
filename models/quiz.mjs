@@ -82,9 +82,66 @@ export async function getQuizById(quizId) {
 
 
 export async function deleteQuiz(quizId) {
-  const result = await pool.query("DELETE FROM tests WHERE id = $1 RETURNING *", [quizId]);
+  const result = await pool.query("DELETE FROM quizzes WHERE id = $1 RETURNING *", [quizId]);
 
   if (result.rowCount === 0) {
     throw new Error("Quiz not found");
   }
+}
+
+export async function submitQuiz({ quizId, userId, answers }) {
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
+    const correctOptions = await client.query(`
+      SELECT o.id, o.question_id
+      FROM options o
+      WHERE o.is_correct = true
+    `);
+
+    const correctMap = new Map();
+    correctOptions.rows.forEach(o => {
+      correctMap.set(o.id, o.question_id);
+    });
+
+    let score = 0;
+
+    for (let answer of answers) {
+      if (correctMap.has(answer.optionId)) {
+        score++;
+      }
+    }
+
+    const submissionResult = await client.query(`
+      INSERT INTO submissions (quiz_id, user_id, score)
+      VALUES ($1, $2, $3)
+      RETURNING id
+    `, [quizId, userId, score]);
+
+    const submissionId = submissionResult.rows[0].id;
+
+    for (let answer of answers) {
+      await client.query(`
+        INSERT INTO submission_answers (submission_id, question_id, option_id)
+        VALUES ($1, $2, $3)
+      `, [submissionId, answer.questionId, answer.optionId]);
+    }
+
+    await client.query("COMMIT");
+
+    return { score, total: answers.length };
+
+  } catch (err) {
+    await client.query("ROLLBACK");
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+export async function getAllQuizzes() {
+    const result = await pool.query("SELECT id, title FROM quizzes ORDER BY created_at DESC");
+    return result.rows;
 }

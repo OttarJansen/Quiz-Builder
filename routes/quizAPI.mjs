@@ -1,6 +1,6 @@
 import express from "express";
 import { validateQuiz } from "../middleware/validateQuiz.mjs";
-import { createQuiz, deleteQuiz, getQuizById } from "../models/quiz.mjs";
+import { createQuiz, deleteQuiz, getQuizById, submitQuiz, getAllQuizzes } from "../models/quiz.mjs";
 import authMiddleware from "../middleware/auth.mjs";
 
 const quizRouter = express.Router();
@@ -26,6 +26,15 @@ quizRouter.post("/", authMiddleware, validateQuiz, async (req, res) => {
   }
 });
 
+quizRouter.get("/", async (req, res) => {
+    try {
+        const result = await getAllQuizzes();
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ error: req.l10n.errorCodes.serverError });
+    }
+});
+
 quizRouter.get("/:id", async (req, res) => {
   const quiz = await getQuizById(req.params.id);
 
@@ -46,6 +55,26 @@ quizRouter.delete("/:id", async (req, res) => {
     res.status(200).json({ message: req.l10n.feedback.deletedQuizSuccessfully });
   } catch {
     res.status(404).json({ error: req.l10n.errorCodes.quizNotFound });
+  }
+});
+
+quizRouter.post("/:id/submit", async (req, res) => {
+  try {
+    const { answers } = req.body; 
+
+    const result = await submitQuiz({
+      quizId: req.params.id,
+      userId: req.user?.id || null,
+      answers
+    });
+
+    res.json({
+      score: result.score,
+      total: result.total
+    });
+
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
