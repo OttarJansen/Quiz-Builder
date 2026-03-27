@@ -3,11 +3,11 @@ export function validateQuiz(req, res, next) {
   const { title, questions } = req.body;
 
   if (!title || typeof title !== "string") {
-    return res.status(400).json({ error: "Missing or invalid title" });
+    return res.status(400).json({ error: req.l10n.errorCodes.titleError });
   }
 
   if (!Array.isArray(questions) || questions.length === 0) {
-    return res.status(400).json({ error: "No questions provided" });
+    return res.status(400).json({ error: req.l10n.errorCodes.questionsNotFound });
   }
 
   for (let q of questions) {
@@ -18,7 +18,7 @@ export function validateQuiz(req, res, next) {
       !Array.isArray(q.correctOptions) || 
       q.correctOptions.length === 0
     ) {
-      return res.status(400).json({ error: "Invalid question structure" });
+      return res.status(400).json({ error: req.l10n.errorCodes.invalidQuestionStructure });
     }
   }
 

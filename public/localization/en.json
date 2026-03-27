@@ -1,0 +1,35 @@
+{
+    "errorCodes": {
+        "missingConsent": "User must consent to ToS",
+        "duplicateUsername": "Username already exists",
+        "userNotFound": "User not found",
+        "quizNotFound": "Quiz not found",
+        "titleError": "Missing or invalid title",
+        "questionsNotFound": "No questions provided",
+        "invalidQuestionStructure": "Invalid question structure",
+        "networkError": "No internet connection",
+        "missingCredentials": "Missing username or password",
+        "invalidCredentials": "Wrong username or password",
+        "serverError": "Server error",
+        "missingToken": "Missing token",
+        "invalidTokenFormat": "Invalid token format",
+        "invalidToken": "Invalid or expired token",
+        "unauthorized": "Unauthorized action",
+        "deactivatedUser": "User account is deactivated",
+        "failedToLoadProfile": "Failed to load profile",
+        "failedToAnonymizeUser": "Failed to anonymize user"
+    },
+    "feedback": {
+        "successfulUserDeletion": "User deleted successfully",
+        "successfulUserCreation": "User created successfully",
+        "successfullyAnonymized": "User anonymized successfully",
+        "createdQuizSuccessfully": "Quiz created successfully",
+        "deletedQuizSuccessfully": "Quiz deleted successfully",
+        "updatedQuizSuccessfully": "Quiz updated successfully",
+        "successfulLogin": "Login successful",
+        "accountDeletionWarning": "Are you sure you want to delete your account?"
+    },
+    "formating": {
+        "time": "hh:mm:ss"
+    }
+}

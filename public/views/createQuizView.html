@@ -1,0 +1,26 @@
+<div id="create-quiz-view">
+    <h2>Create Quiz</h2>
+
+    <form id="create-quiz-form">
+        <input type="text" id="title" placeholder="Quiz title" required />
+
+        <div id="questions-container"></div>
+
+        <button type="button" id="add-question-btn">Add Question</button>
+        <button type="submit">Create Quiz</button>
+    </form>
+
+    <template id="question-template">
+        <div class="question">
+            <input class="question-text" placeholder="Question text"/>
+
+            <input class="option" placeholder="Option 1"/>
+            <input class="option" placeholder="Option 2"/>
+
+            <label>
+                Correct option:
+                <input class="correct"/>
+            </label>
+        </div>
+    </template>
+</div>

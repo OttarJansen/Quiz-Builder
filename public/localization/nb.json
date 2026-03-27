@@ -1,0 +1,32 @@
+{
+    "errorCodes": {
+        "missingConsent": "Brukeren må samtykke til ToS",
+        "duplicateUsername": "Brukernavnet eksisterer allerede",
+        "userNotFound": "Finner ikke brukeren",
+        "quizNotFound": "Finner ikke quizen",
+        "titleError": "Manglende eller ugyldig tittel",
+        "questionsNotFound": "Manglende spørsmål",
+        "invalidQuestionStructure": "Ugyldig spørsmål-struktur",
+        "networkError": "Ingen nettverkstilkobling",
+        "missingCredentials": "Manglende brukernavn eller passord",
+        "invalidCredentials": "Feil brukernavn eller passord",
+        "serverError": "Server feilet",
+        "missingToken": "Manglende token",
+        "invalidTokenFormat": "Feil token-format",
+        "invalidToken": "Feil eller utgått token",
+        "unauthorized": "Uautorisert handling",
+        "deactivatedUser": "Brukeren er deaktivert",
+        "failedToLoadProfile": "Lasting av bruker feilet",
+        "failedToAnonymizeUser": "Anonymisering av bruker feilet"
+    },
+    "feedback": {
+        "successfulUserDeletion": "Brukeren ble slettet",
+        "successfulUserCreation": "Brukeren ble opprettet",
+        "successfullyAnonymized": "Brukeren ble anonymisert",
+        "createdQuizSuccessfully": "Quizen ble opprettet",
+        "deletedQuizSuccessfully": "Quizen ble slettet",
+        "updatedQuizSuccessfully": "Quizen ble oppdatert",
+        "successfulLogin": "Vellykket innlogging",
+        "accountDeletionWarning": "Er du sikker på at du vil slette brukeren?"
+    }
+}
