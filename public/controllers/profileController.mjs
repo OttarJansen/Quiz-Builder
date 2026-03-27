@@ -27,13 +27,22 @@ export async function initProfileController() {
         const quizzes = await get("./quizzes");
         quizzes.forEach(q => {
             const btn = document.createElement("button");
-            btn.textContent = q.title;
+
+            let displayName = q.username;
+
+            if (displayName && displayName.startsWith("anonymous_")) {
+                displayName = "anonymous";
+            }
+
+            btn.textContent = `${q.title} (by ${displayName})`;
+
             btn.addEventListener("click", async () => {
                 const template = await loadView("takeQuizView");
                 app.replaceChildren();
                 app.appendChild(template.content.cloneNode(true));
                 initTakeQuizController(q.id);
             });
+
             quizListContainer.appendChild(btn);
         });
     } catch (err) {

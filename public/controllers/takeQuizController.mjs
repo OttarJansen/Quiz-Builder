@@ -1,57 +1,54 @@
 import { get, post } from "../fetchManager.mjs";
+import loadView from "../viewLoader.mjs";
 
 export async function initTakeQuizController(quizId) {
     const app = document.getElementById("app");
-    const form = document.getElementById("quiz-form");
-    const titleElem = document.getElementById("quiz-title");
-    const submitBtn = document.getElementById("submit-quiz-btn");
 
-    let quiz;
-    try {
-        quiz = await get(`./quizzes/${quizId}`);
-        if (quiz.error) throw new Error(quiz.error);
-    } catch (err) {
-        alert("Failed to load quiz: " + (err.message || err));
+    const quiz = await get(`./quizzes/${quizId}`);
+
+    if (quiz.error) {
+        alert(quiz.error);
         return;
     }
 
-    titleElem.textContent = quiz.title;
+    document.getElementById("quiz-title").textContent = quiz.title;
 
-    quiz.questions.forEach((question, qIndex) => {
-        const qDiv = document.createElement("div");
-        qDiv.classList.add("question");
+    const form = document.getElementById("quiz-form");
+
+    quiz.questions.forEach(q => {
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "question";
 
         const qText = document.createElement("p");
-        qText.textContent = `${qIndex + 1}. ${question.text}`;
-        qDiv.appendChild(qText);
+        qText.textContent = q.text;
+        questionDiv.appendChild(qText);
 
-        question.options.forEach(option => {
-            const optionLabel = document.createElement("label");
-            optionLabel.style.display = "block";
-
-            const optionInput = document.createElement("input");
-            optionInput.type = "radio";
-            optionInput.name = `question-${question.id}`;
-            optionInput.value = option.id;
-
-            optionLabel.appendChild(optionInput);
-            optionLabel.appendChild(document.createTextNode(option.text));
-
-            qDiv.appendChild(optionLabel);
+        q.options.forEach(opt => {
+            const label = document.createElement("label");
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = `question_${q.id}`;
+            radio.value = opt.id;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(opt.text));
+            questionDiv.appendChild(label);
         });
 
-        form.appendChild(qDiv);
+        form.appendChild(questionDiv);
     });
+
+    const submitBtn = document.getElementById("submit-quiz-btn");
 
     submitBtn.addEventListener("click", async (e) => {
         e.preventDefault();
 
         const answers = [];
-        quiz.questions.forEach(question => {
-            const selected = form.querySelector(`input[name="question-${question.id}"]:checked`);
+
+        quiz.questions.forEach(q => {
+            const selected = form.querySelector(`input[name="question_${q.id}"]:checked`);
             if (selected) {
                 answers.push({
-                    questionId: question.id,
+                    questionId: q.id,
                     optionId: parseInt(selected.value)
                 });
             }
@@ -59,13 +56,17 @@ export async function initTakeQuizController(quizId) {
 
         try {
             const result = await post(`./quizzes/${quizId}/submit`, { answers });
-            if (result.error) {
-                alert(result.error);
-            } else {
-                alert(`You scored ${result.score} out of ${result.total}`);
-            }
+            alert(`Score: ${result.score}/${result.total}`);
+
+            const profileTemplate = await loadView("profileView");
+            app.replaceChildren();
+            app.appendChild(profileTemplate.content.cloneNode(true));
+
+            const { initProfileController } = await import("./profileController.mjs");
+            initProfileController();
+
         } catch {
-            alert("Network error submitting quiz");
+            alert("Network error");
         }
     });
 }

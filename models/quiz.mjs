@@ -142,6 +142,11 @@ export async function submitQuiz({ quizId, userId, answers }) {
 }
 
 export async function getAllQuizzes() {
-    const result = await pool.query("SELECT id, title FROM quizzes ORDER BY created_at DESC");
+    const result = await pool.query(`
+        SELECT q.id, q.title, u.username
+        FROM quizzes q
+        JOIN users u ON q.user_id = u.id
+        ORDER BY q.created_at DESC
+    `);
     return result.rows;
 }
