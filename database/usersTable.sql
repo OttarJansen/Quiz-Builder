@@ -3,7 +3,7 @@ CREATE TABLE "public"."users" (
     "id" uuid NOT NULL,
     "username" text NOT NULL,
     "consent" bool NOT NULL,
-    "hashedpassword" text NOT NULL,
+    "hashedpassword" text,
     PRIMARY KEY ("id")
 );
 

@@ -1,6 +1,7 @@
 import loadView from "./viewLoader.mjs";
 import { initRegisterController } from "./controllers/registerController.mjs";
 import { initLoginController } from "./controllers/loginController.mjs";
+import { initProfileController } from "./controllers/profileController.mjs";
 
 const app = document.getElementById("app");
 
@@ -15,13 +16,18 @@ async function renderView(viewName, initController) {
     }
 }
 
-renderView("loginView", initLoginController);
+const token = localStorage.getItem("token");
+
+if (token) {
+    renderView("profileView", initProfileController);
+} else {
+    renderView("loginView", initLoginController);
+}
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
         navigator.serviceWorker
             .register("/serviceWorker.js")
-            .then(/*(reg) => console.log("Service Worker registered", reg)*/)
-            .catch(/*(err) => console.error("Service Worker failed:", err)*/);
+            .catch(() => {});
     });
 }

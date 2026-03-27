@@ -24,9 +24,14 @@ async function runRequest(method, url, data, contentType) {
     const headers = {
         method,
         headers: {
-            'Content-Type': contentType,
+            "Content-Type": contentType
         }
     };
+
+    const token = localStorage.getItem("token");
+    if (token) {
+        headers.headers["Authorization"] = `Bearer ${token}`;
+    }
 
     if (data) {
         headers.body = JSON.stringify(data);
@@ -34,7 +39,7 @@ async function runRequest(method, url, data, contentType) {
 
     let response = await fetch(url, headers);
 
-    if (contentType === HTTP.contentTypes.application.json) {
+    if (contentType === "application/json") {
         response = await response.json();
     } else {
         response = await response.text();

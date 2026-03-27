@@ -4,7 +4,10 @@
 The user API is an API for creating and deleting users.
 
 POST	 /user	          Creates a user
-DELETE	 /user/:id	      Deletes a user
+POST     /user/login      Logs in the user
+GET      /user/profile    Retrieves user's profile information
+DELETE	 /user/:id	      Anonymizes the user
+
 
 ------------------------------------------------
 POST /user:
@@ -21,20 +24,81 @@ body example:
     "consent": true
 }
 
-A user with a unique id and hashed password is then created as shown here:
+A user with a unique id is then created as shown here:
 
 {
-    "userId": "c619faf9-6c81-4239-9213-50b620ec322d",
+  "message": "User created successfully",
+  "user": {
+    "id": "uuid",
     "username": "testuser",
-    "consentGiven": true,
-    "hashedPassword": "310b612cf297fc356e657dbf2a085eb2f56ac29cec378f1e6b852eda1a4f1904"
+    "consent": true
+  }
+}
+
+-------------------------------------------------
+POST /user/login:
+
+{{baseURL}}/user/login
+
+The body requires a json object with a username, and password.
+
+body example:
+
+{
+    "username": "testuser",
+    "password": "qwerty123"
+}
+
+The user is logged in and returns a JWT-token:
+
+{
+  "message": "Login successful",
+  "user": {
+    "id": "uuid",
+    "username": "testuser",
+    "consent": true
+  },
+  "token": "JWT_TOKEN"
+}
+
+-------------------------------------------------
+GET /user/profile:
+
+{{baseURL}}/user/profile
+
+The header requires a valid token.
+
+header example:
+
+Authorization: Bearer JWT_TOKEN
+
+The user's profile information is retrieved:
+
+{
+  "user": {
+    "id": "uuid",
+    "username": "testuser",
+    "consent": true
+  }
 }
 
 -------------------------------------------------
 DELETE /user/:id:
 
-{{baseURL}}/user/316085a0-4a9f-4bdc-8295-9a844c500310
+{{baseURL}}/user/{userId}
 
-Deletes the user with the given UserId.
+The header requires a valid token.
+
+header example:
+
+Authorization: Bearer JWT_TOKEN
+
+Anonymizes the user with the given UserId. The username is changed to anonymous_uiid, password is set to null and consent is set to false.
+
+Response:
+
+{
+  "message": "User anonymized successfully"
+}
 
 --------------------------------------------------
