@@ -1,22 +1,24 @@
 import pool from "../database/database.mjs";
 
-export async function createQuiz({ title, questions }) {
+export async function createQuiz({ title, questions, userId }) {
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
 
-    const testResult = await client.query(
-      "INSERT INTO tests (title) VALUES ($1) RETURNING id",
-      [title]
+    const quizResult = await client.query(
+      "INSERT INTO quizzes (title, user_id) VALUES ($1, $2) RETURNING id",
+      [title, userId]
     );
 
-    const testId = testResult.rows[0].id;
+    const quizId = quizResult.rows[0].id;
 
-    for (const question of questions) {
+    for (let i = 0; i < questions.length; i++) {
+      const question = questions[i];
+
       const questionResult = await client.query(
-        "INSERT INTO questions (test_id, text) VALUES ($1, $2) RETURNING id",
-        [testId, question.text]
+        "INSERT INTO questions (quiz_id, text, position) VALUES ($1, $2, $3) RETURNING id",
+        [quizId, question.text, i]
       );
 
       const questionId = questionResult.rows[0].id;
@@ -32,7 +34,7 @@ export async function createQuiz({ title, questions }) {
     }
 
     await client.query("COMMIT");
-    return testId;
+    return quizId;
 
   } catch (err) {
     await client.query("ROLLBACK");
@@ -44,19 +46,15 @@ export async function createQuiz({ title, questions }) {
 
 
 export async function getQuizById(quizId) {
-  const testResult = await pool.query(
-    "SELECT id, title FROM tests WHERE id = $1",
+  const quizResult = await pool.query(
+    "SELECT id, title FROM quizzes WHERE id = $1",
     [quizId]
   );
 
-  if (testResult.rowCount === 0) {
-    return null;
-  }
-
-  const test = testResult.rows[0];
+  if (quizResult.rowCount === 0) return null;
 
   const questionsResult = await pool.query(
-    "SELECT id, text FROM questions WHERE test_id = $1",
+    "SELECT id, text FROM questions WHERE quiz_id = $1 ORDER BY position",
     [quizId]
   );
 
@@ -64,7 +62,7 @@ export async function getQuizById(quizId) {
 
   for (const question of questionsResult.rows) {
     const optionsResult = await pool.query(
-      "SELECT text, is_correct FROM options WHERE question_id = $1",
+      "SELECT id, text FROM options WHERE question_id = $1",
       [question.id]
     );
 
@@ -76,11 +74,9 @@ export async function getQuizById(quizId) {
   }
 
   return {
-    title: test.title,
-    questions: questions.map(q => ({
-      text: q.text,
-      options: q.options
-    }))
+    id: quizId,
+    title: quizResult.rows[0].title,
+    questions
   };
 }
 

@@ -1,23 +1,29 @@
 import express from "express";
 import { validateQuiz } from "../middleware/validateQuiz.mjs";
 import { createQuiz, deleteQuiz, getQuizById } from "../models/quiz.mjs";
+import authMiddleware from "../middleware/auth.mjs";
 
 const quizRouter = express.Router();
 
 quizRouter.use(express.json());
 
 
-quizRouter.post("/", validateQuiz, async (req, res) => {
+quizRouter.post("/", authMiddleware, validateQuiz, async (req, res) => {
   try {
-    const quizId = await createQuiz(req.body);
-    res.status(201).json({ message: req.l10n.feedback.createdQuizSuccessfully, id: quizId });
+    const quizId = await createQuiz({
+      ...req.body,
+      userId: req.user.id
+    });
+
+    res.status(201).json({
+      message: req.l10n.feedback.createdQuizSuccessfully,
+      id: quizId,
+      link: `/quiz/${quizId}`
+    });
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-});
-
-quizRouter.get("/", (req, res) => {
-  res.json([]);
 });
 
 quizRouter.get("/:id", async (req, res) => {
@@ -37,7 +43,7 @@ quizRouter.put("/:id", validateQuiz, (req, res) => {
 quizRouter.delete("/:id", async (req, res) => {
   try {
     await deleteQuiz(req.params.id);
-    res.status(200).json({ message: req.l10n.errorCodes.deletedQuizSuccessfully });
+    res.status(200).json({ message: req.l10n.feedback.deletedQuizSuccessfully });
   } catch {
     res.status(404).json({ error: req.l10n.errorCodes.quizNotFound });
   }

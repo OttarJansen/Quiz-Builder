@@ -2,6 +2,7 @@ import { get, del } from "../fetchManager.mjs";
 import loadView from "../viewLoader.mjs";
 import { initLoginController } from "./loginController.mjs";
 import i18n from "../i18nClient.mjs";
+import { initCreateQuizController } from "./createQuizController.mjs";
 
 export async function initProfileController() {
     const app = document.getElementById("app");
@@ -51,6 +52,13 @@ export async function initProfileController() {
         app.replaceChildren();
         app.appendChild(template.content.cloneNode(true));
         initLoginController();
+    });
+
+    document.getElementById("createQuizPageBtn").addEventListener("click", async () => {
+        const template = await loadView("createQuizView");
+        app.replaceChildren();
+        app.appendChild(template.content.cloneNode(true));
+        initCreateQuizController();
     });
 }
 

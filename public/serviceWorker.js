@@ -1,4 +1,4 @@
-const CACHE_NAME = "quiz-app-v33";
+const CACHE_NAME = "quiz-app-v36";
 const urlsToCache = [
     "/",
     "/index.html",
@@ -13,7 +13,7 @@ const urlsToCache = [
     "/views/loginView.html",
     "/controllers/loginController.mjs",
     "/controllers/profileController.mjs",
-    "views/profileView.html",
+    "/views/profileView.html",
 
     "/localization/en.json",
     "/localization/nb.json",

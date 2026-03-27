@@ -1,5 +1,6 @@
 import loadView from "./viewLoader.mjs";
 import { initRegisterController } from "./controllers/registerController.mjs";
+import { initCreateQuizController } from "./controllers/createQuizController.mjs";
 import { initLoginController } from "./controllers/loginController.mjs";
 import { initProfileController } from "./controllers/profileController.mjs";
 
